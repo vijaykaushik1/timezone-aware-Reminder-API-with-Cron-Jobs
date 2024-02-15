@@ -76,4 +76,26 @@ router.post('/login', [
     }
 });
 
+router.put('/set_timezone', [
+    body('timezone').notEmpty().withMessage('Timezone is required')
+], async (req, res) => {    
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+        const userId = req.userId; // Assuming you have middleware to extract user ID from request
+        const { timezone } = req.body;
+
+        // Update user's timezone in the database
+        await User.findByIdAndUpdate(userId, { timezone });
+
+        res.status(200).json({ message: 'Timezone updated successfully' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
 module.exports = router;

@@ -85,6 +85,8 @@ app.get('/api/v1/remainder/reminders', common.validate_token, (req, res) => {
     const userReminders = reminders.filter(reminder => reminder.userId === userId);
     res.status(200).json(userReminders);
 });
+
+
 // Start the server
 const PORT = global.PORT || 3000;
 server.listen(PORT, () => {
