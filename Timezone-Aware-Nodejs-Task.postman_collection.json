@@ -82,7 +82,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"reminderTime\": \"2024-09-15T22:53:00Z\",\r\n  \"title\": \"Meeting with Team 22:53:00\"\r\n}\r\n",
+					"raw": "{\r\n  \"reminderTime\": \"2024-09-15T23:34:00Z\",\r\n  \"title\": \"Meeting with Team 23:34:00\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -130,13 +130,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5002/reminders",
+					"raw": "http://localhost:5002/api/v1/remainder/reminders",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "5002",
 					"path": [
+						"api",
+						"v1",
+						"remainder",
 						"reminders"
 					]
 				}

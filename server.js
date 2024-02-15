@@ -60,15 +60,13 @@ app.post('/api/v1/remainder/schedule_reminder', common.validate_token, [
         const timezone = user.timezone;
 
         const reminderTimeUserTz = moment.tz(reminderTime, timezone);
-        const currentTime = moment().tz(timezone);
-        const timeDifference = reminderTimeUserTz.diff(currentTime);
-        
-        // const cronSchedule = common.calculateCronSchedule(reminderTimeUserTz);
-        // console.log(cronSchedule);
-        setTimeout(() => {
+        const cronSchedule = common.calculateCronSchedule(reminderTimeUserTz);
+        console.log(cronSchedule);
+        const job = cron.schedule(cronSchedule, () => {
             console.log(`Reminder triggered for user ${userId} at ${reminderTimeUserTz.format()}`);
             io.emit('reminderTriggered', { userId, reminderTime: reminderTimeUserTz, title });
-        }, timeDifference);
+            job.destroy();
+        });
 
         reminders.push({ userId, reminderTime: reminderTimeUserTz, timezone, title });
 
