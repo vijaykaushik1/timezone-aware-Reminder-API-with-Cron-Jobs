@@ -1,0 +1,147 @@
+{
+	"info": {
+		"_postman_id": "b6af65fb-0a6b-4883-96aa-7851dc3b9b6c",
+		"name": "Timezone-Aware-Nodejs-Task",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16988909",
+		"_collection_link": "https://cloudy-shuttle-761248.postman.co/workspace/Timezone-Aware-Nodejs-Task~1f06c549-a1d0-4b8e-a7dc-0fe731e985d7/collection/16988909-b6af65fb-0a6b-4883-96aa-7851dc3b9b6c?action=share&source=collection_link&creator=16988909"
+	},
+	"item": [
+		{
+			"name": "create_account",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Backend Dev\",\r\n    \"email\":\"backend@gmail.com\",\r\n    \"password\":\"123456\",\r\n    \"timezone\": \"Asia/Kolkata\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5002/api/v1/user/create_account",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5002",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"create_account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"backend@gmail.com\",\r\n    \"password\":\"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5002/api/v1/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5002",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "schedule_reminder",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWNlMzAxZTc1MjUyYTc2NWVjZjAzNmMiLCJpYXQiOjE3MDgwMTE3MDcsImV4cCI6MTcwODA5ODEwN30.BEYZXCLyObJLZ44l90u0Enq-Gt_t8z1MGrHk2sRAl0s",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"reminderTime\": \"2024-09-15T22:53:00Z\",\r\n  \"title\": \"Meeting with Team 22:53:00\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5002/api/v1/remainder/schedule_reminder",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5002",
+					"path": [
+						"api",
+						"v1",
+						"remainder",
+						"schedule_reminder"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reminders",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWNlMzAxZTc1MjUyYTc2NWVjZjAzNmMiLCJpYXQiOjE3MDgwMTE3MDcsImV4cCI6MTcwODA5ODEwN30.BEYZXCLyObJLZ44l90u0Enq-Gt_t8z1MGrHk2sRAl0s",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5002/reminders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5002",
+					"path": [
+						"reminders"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
