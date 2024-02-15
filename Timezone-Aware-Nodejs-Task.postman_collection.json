@@ -142,6 +142,43 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "set_timezone",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NWNlMzAxZTc1MjUyYTc2NWVjZjAzNmMiLCJpYXQiOjE3MDgwMTE3MDcsImV4cCI6MTcwODA5ODEwN30.BEYZXCLyObJLZ44l90u0Enq-Gt_t8z1MGrHk2sRAl0s",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"timezone\":\"Asia/Kolkata\" //America/New_York\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5002/api/v1/user/set_timezone",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5002",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"set_timezone"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
