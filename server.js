@@ -68,8 +68,8 @@ app.post('/api/v1/remainder/schedule_reminder', common.validate_token, [
         const timezone = user.timezone;
 
         const reminderTimeUserTz = moment.tz(reminderTime, timezone);
-        const reminderTimeUTC = reminderTimeUserTz.utc();
-        const cronSchedule = common.calculateCronSchedule(reminderTimeUTC);
+        // const reminderTimeUTC = reminderTimeUserTz.utc();
+        const cronSchedule = common.calculateCronSchedule(reminderTimeUserTz);
         
         console.log(cronSchedule);
         const job = cron.schedule(cronSchedule, () => {
