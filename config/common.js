@@ -22,7 +22,23 @@ const common = {
             next();
         }
     },
-    
+
+    extractUserIdFromToken: (socket, next) => {
+        const token = socket.handshake.headers.authorization;
+
+        if (!token) {
+            return next(new Error('No JWT token found'));
+        }
+        try {
+            const decoded = jwt.verify(token, global.JWT_TOKEN);
+            const userId = decoded.userId;
+            socket.userId = userId;
+            next();
+        } catch (error) {
+            next(new Error('Invalid JWT token'));
+        }
+    },
+
     calculateCronSchedule: (reminderTime) => {
         const minute = reminderTime.minute();
         const hour = reminderTime.hour();

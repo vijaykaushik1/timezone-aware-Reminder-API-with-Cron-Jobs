@@ -20,21 +20,29 @@ app.use(cookieParser());
 let route_v1 = require('./modules/v1/route');
 const common = require('./config/common');
 
-
 const server = http.createServer(app);
 const io = socketIo(server);
+
 io.on('connection', (socket) => {
     console.log('WebSocket client connected');
+    common.extractUserIdFromToken(socket, (error) => {
+        if (error) {            
+            console.error(error.message);
+            return socket.disconnect(true);
+        }
+        const userId = socket.userId;
+        console.log(`User with userId ${userId} connected`);
+        socket.join(userId);
+        socket.on('disconnect', () => {
+            console.log(`User with userId ${userId} disconnected`);
+            socket.leave(userId);
+        });
+    });
 });
 
-// WebSocket event for disconnect
-io.on('disconnect', (socket) => {
-    console.log('WebSocket client disconnected');
-});
-
-// const server = app.listen(global.PORT);
-console.log("Server connected with port: " + global.PORT);
-
+const emitReminderTriggered = (userId, reminderTime, title) => {
+    io.to(userId).emit('reminderTriggered', { userId, reminderTime, title });
+};
 
 
 app.use('/api/v1', route_v1);
@@ -60,11 +68,13 @@ app.post('/api/v1/remainder/schedule_reminder', common.validate_token, [
         const timezone = user.timezone;
 
         const reminderTimeUserTz = moment.tz(reminderTime, timezone);
-        const cronSchedule = common.calculateCronSchedule(reminderTimeUserTz);
+        const reminderTimeUTC = reminderTimeUserTz.utc();
+        const cronSchedule = common.calculateCronSchedule(reminderTimeUTC);
+        
         console.log(cronSchedule);
         const job = cron.schedule(cronSchedule, () => {
             console.log(`Reminder triggered for user ${userId} at ${reminderTimeUserTz.format()}`);
-            io.emit('reminderTriggered', { userId, reminderTime: reminderTimeUserTz, title });
+            emitReminderTriggered(userId, reminderTimeUserTz, title);                        
             job.destroy();
         });
 

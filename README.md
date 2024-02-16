@@ -1,10 +1,32 @@
-# To run this project follow below mentioned instructions
+
+### cron schedule code - 
+```
+        const userId = req.userId;
+        const { reminderTime, title } = req.body;
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        const timezone = user.timezone;
+        const reminderTimeUserTz = moment.tz(reminderTime, timezone);
+        const reminderTimeUTC = reminderTimeUserTz.utc();
+        const cronSchedule = common.calculateCronSchedule(reminderTimeUTC);
+        console.log(cronSchedule);
+        
+        const job = cron.schedule(cronSchedule, () => {
+            console.log(`Reminder triggered for user ${userId} at ${reminderTimeUserTz.format()}`);
+            emitReminderTriggered(userId, reminderTimeUserTz, title);  // It is the socket function to notify users.                  
+            job.destroy();
+        });
+```
 ***
 
+# To run this project follow below mentioned instructions
+***
 You must have node 16 or latest, If not download node from official site\
 [Click here to download Nodejs](https://nodejs.org/ene)
 
-You must have latest mongoDb insalled, If not download from official site\
+You must have latest mongoDb installed, If not download from official site\
 [Click here to download MongoDB](https://www.mongodb.com/try/download/community)
 
 Run cmd: ```git clone https://github.com/vijaykaushik1/timezone-aware-Reminder-API-with-Cron-Jobs.git```\
@@ -47,5 +69,6 @@ Headers Key-Authorization Value-JwtToken received in login or create account api
 {
     "timezone":"Asia/Kolkata"
 }
+
 
 ##### If you find any difficulty then import Timezone-Aware-Nodejs-Task.postman_collection in postman, It is situated in root directory of project and use it.
