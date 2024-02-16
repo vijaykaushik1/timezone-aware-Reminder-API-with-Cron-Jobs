@@ -22,7 +22,7 @@
 ***
 
 # To run this project follow below mentioned instructions
-***
+
 You must have node 16 or latest, If not download node from official site\
 [Click here to download Nodejs](https://nodejs.org/ene)
 
